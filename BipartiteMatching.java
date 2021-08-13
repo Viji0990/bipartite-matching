@@ -128,6 +128,8 @@ public class BipartiteMatching {
 		System.out.println("\nMaximum pairs matched = "+flow);
 	}
 	
+/*	
+	
 	//Calls dfs to find an augmentation path & check if it reached the sink
 	public boolean existsAugmentingPath(int source, int sink){
 		isVertexMarked = new boolean[vertexCount];		//recreate array of visited nodes each time searching for a path
@@ -153,6 +155,71 @@ public class BipartiteMatching {
 				isVertexMarked[otherEndNode] = true;		//visit the node
 				depthFirstSearch(otherEndNode, sink);		//recursively continue exploring
 			}
+		}
+	}
+*/	
+	
+	
+//Calls Breath first search to find an augmentation path & check if it reached the sink
+	
+	public boolean existsAugmentingPath(int source, int sink) {
+		
+		isVertexMarked = new boolean[vertexCount];		//recreate array of visited nodes each time searching for a path
+				//visit the source
+		isVertexMarked[source] = true;
+	
+		// System.out.print("Augmenting Path : S ");
+		 breathFirstSearch(source, sink);		//attempts to find path from source to sink & updates isVertexMarked
+		// System.out.print("T  ");
+	
+		return isVertexMarked[sink];	//if it reached the sink, then a path was found
+	}
+	
+	
+	
+	private void breathFirstSearch(int source, int sink) {
+			
+		source=source;
+		sink=sink;
+		
+	}
+	
+	public void breathFirstSearch(int v, int sink, HashMap<Integer, Integer[]> edges, int N){
+		if(v==sink){	//No point in finding a path if the starting vertex is already at the sink
+			return;
+		}
+		else {
+			
+				boolean[] discovered = new boolean[N];
+			
+		        Queue <Integer> q = new ArrayDeque<Integer>();
+		        q.add(v);
+		        
+		        HashMap<Integer,Integer> level = new HashMap<Integer,Integer>();
+		        level.put(v, 0);  //Setting the level of the source node as 0
+		        int now_level = 0;
+		        isVertexMarked[sink] = true;
+		        
+		        while (!q.isEmpty())
+		        {
+		        	int p = q.poll();
+		            now_level++;
+		            // do for every edge `v —> u`
+		            for (int u: edges.get(v))
+		            {
+		            	if ( u== v) {
+		            		return 	;/*something to do*/
+		            	}
+		                if (!discovered[u] /* if u was not searched */ )
+		                {
+		                    // mark it as discovered and enqueue it
+		                    discovered[u] = true;
+		                    q.add(u);
+		                    breathFirstSearch(v ,  sink);	
+		                }
+		            }
+		            
+		        }
 		}
 	}
 
